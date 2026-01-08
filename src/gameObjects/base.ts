@@ -28,6 +28,7 @@ export default function createImg(
     size: { width, height }, // 初始尺寸
     position: { x, y },      // 相对父容器的坐标（核心：不再强制全屏）
     origin: { x: 0, y: 0 },  // 锚点默认左上角，符合常规绘图习惯
+    // anchor: { x: 0.5, y: 0.5 },
   });
 
   // 2. 添加图片组件

@@ -1,8 +1,4 @@
 import createBackground from './gameObjects/background';
-import createBasketFront from './gameObjects/board/basketFront';
-import createBoard from './gameObjects/board/board';
-import createBall from './gameObjects/ball';
-import createBtn from './gameObjects/btn';
 import resources from './resources';
 
 import { Game, resource } from '@eva/eva.js';
@@ -14,6 +10,10 @@ import { RenderSystem } from '@eva/plugin-renderer-render';
 import { TransitionSystem } from '@eva/plugin-transition';
 import { GraphicsSystem } from '@eva/plugin-renderer-graphics';
 import { TextSystem } from '@eva/plugin-renderer-text';
+import createBtns from './gameObjects/btns';
+import createProgress from './gameObjects/progress';
+import createTree from './gameObjects/tree';
+import createWater from './gameObjects/water';
 
 resource.addResource(resources);
 
@@ -21,8 +21,8 @@ const game = new Game({
   systems: [
     new RendererSystem({
       canvas: document.querySelector('#canvas'),
-      width: 750,
-      height: 1484,
+      width: window.innerWidth, // 屏幕宽度
+      height: window.innerHeight, // 屏幕高度
       antialias: true,
     }),
     new ImgSystem(),
@@ -35,42 +35,46 @@ const game = new Game({
   ],
 });
 
-game.scene.transform.size.width = 750;
-game.scene.transform.size.height = 1484;
-
-const pos = {
-  x: 500,
-  y: 1100,
-};
-
-const ball = createBall(pos);
-const { basetFront, playAnim } = createBasketFront();
-const btn = createBtn({
-  text: '投球',
-  transform: {
-    position: {
-      x: 0,
-      y: -120,
-    },
-    origin: {
-      x: 0.5,
-      y: 0.5,
-    },
-    anchor: {
-      x: 0.5,
-      y: 1,
-    },
-  },
-  callback: () => {
-    alert('还没做呢～一起来完善吧')
-  },
-});
+// game.scene.transform.size.width = window.innerWidth;
+// game.scene.transform.size.height = window.innerHeight;
 
 game.scene.addChild(createBackground());
-game.scene.addChild(createBoard());
-game.scene.addChild(ball);
-game.scene.addChild(basetFront);
-game.scene.addChild(btn);
-
-window.playAnim = playAnim;
+game.scene.addChild(createProgress());
+game.scene.addChild(createBtns());
+game.scene.addChild(createWater());
+game.scene.addChild(createTree());
 window.game = game;
+
+const canvas: any = document.querySelector('#canvas');
+// 适配高清屏的分辨率
+const dpr = window.devicePixelRatio || 1;
+
+function updateCanvasSize() {
+  // 视觉尺寸：占满屏幕
+  const screenW = window.innerWidth;
+  const screenH = window.innerHeight;
+
+  // 绘制分辨率：乘以dpr避免模糊
+  canvas.width = screenW * dpr;
+  canvas.height = screenH * dpr;
+
+  // 视觉尺寸样式（抵消dpr的影响）
+  canvas.style.width = `${screenW}px`;
+  canvas.style.height = `${screenH}px`;
+
+  return { width: screenW, height: screenH };
+}
+
+// 窗口变化时同步更新场景+元素
+window.addEventListener('resize', () => {
+  // const { width: newW, height: newH } = updateCanvasSize();
+  // 更新场景尺寸
+  // game.scene.transform.size.width = newW;
+  // game.scene.transform.size.height = newH;
+  // 更新场景内元素（如背景图）
+  // const bg1 = game.scene.gameObjects[1];
+  // if (bg1) {
+  //   bg1.scene.transform.size.width = newW;
+  //   bg1.scene.transform.size.height = newH;
+  // }
+});

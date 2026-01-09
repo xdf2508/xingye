@@ -156,6 +156,18 @@ export default [
     },
     preload: true,
   },
+  // 等级图标圆形
+  {
+    name: 'levelCircle',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/level_circle.png',
+      },
+    },
+    preload: true,
+  },
   // 等级图标透明背景
   {
     name: 'paopao',
@@ -485,12 +497,12 @@ export default [
   },
   // 星星
   {
-    name: 'starMini',
+    name: 'bubble',
     type: RESOURCE_TYPE.IMAGE,
     src: {
       image: {
         type: 'png',
-        url: './statics/star_mini.png',
+        url: './statics/bubble.png',
       },
     },
     preload: true,
@@ -650,7 +662,7 @@ export default [
     src: {
       image: {
         type: 'png',
-        url: './statics/tree_light1.png',
+        url: './statics/tree1_light.png',
       },
     },
     preload: true,
@@ -674,7 +686,7 @@ export default [
     src: {
       image: {
         type: 'png',
-        url: './statics/tree_light2.png',
+        url: './statics/tree2_light.png',
       },
     },
     preload: true,
@@ -698,7 +710,127 @@ export default [
     src: {
       image: {
         type: 'png',
-        url: './statics/tree_light3.png',
+        url: './statics/tree3_light.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗4
+  {
+    name: 'tree4',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree4.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗4发光
+  {
+    name: 'tree4Light',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree4_light.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗5
+  {
+    name: 'tree5',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree5.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗5发光
+  {
+    name: 'tree5Light',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree5_light.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗6
+  {
+    name: 'tree6',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree6.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗6发光
+  {
+    name: 'tree6Light',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree6_light.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗7
+  {
+    name: 'tree7',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree7.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗7发光
+  {
+    name: 'tree7Light',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree7_light.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗8
+  {
+    name: 'tree8',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree8.png',
+      },
+    },
+    preload: true,
+  },
+  // 树苗8发光
+  {
+    name: 'tree8Light',
+    type: RESOURCE_TYPE.IMAGE,
+    src: {
+      image: {
+        type: 'png',
+        url: './statics/tree8_light.png',
       },
     },
     preload: true,

@@ -14,6 +14,7 @@ import createBtns from './gameObjects/btns';
 import createProgress from './gameObjects/progress';
 import createTree from './gameObjects/tree';
 import createWater from './gameObjects/water';
+import createCount from './gameObjects/count';
 
 resource.addResource(resources);
 
@@ -42,7 +43,9 @@ game.scene.addChild(createBackground());
 game.scene.addChild(createProgress());
 game.scene.addChild(createBtns());
 game.scene.addChild(createWater());
+game.scene.addChild(createCount());
 game.scene.addChild(createTree());
+
 window.game = game;
 
 const canvas: any = document.querySelector('#canvas');

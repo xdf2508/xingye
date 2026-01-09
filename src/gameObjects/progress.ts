@@ -113,7 +113,7 @@ export default function createProgress() {
       const newLeftLevel = homeStore.getLeftLevel();
       const newRightLevel = homeStore.getRightLevel();
       leftLvText.text = `${newLeftLevel}级`;
-      levelTextRight.text = `LV${newRightLevel}`;
+      levelTextRight.text = `Lv${newRightLevel}`;
     }
   };
   homeStore.onDataChange(dataChangeListener);

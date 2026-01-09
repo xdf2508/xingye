@@ -6,6 +6,7 @@ class HomeStore {
   // 核心业务数据
   private progressValue = 0;      // 当前进度数值（0-1000）
   private progressMaxValue = 1000; // 进度最大值（满1000升级）
+  private maxLevel = 8; // 最高等级
   private progressBarWidthMax = 210; // 进度轴最大像素宽度
   private level = 1;              // 右边等级（LVx），左边等级 = level - 1
 
@@ -59,6 +60,11 @@ class HomeStore {
     // 检查是否满1000，满则升级+进度重置
     if (newProgress >= this.progressMaxValue) {
       newProgress = 0; // 进度重置为0
+      if (this.level >= this.maxLevel) {
+        console.log('已达到最高等级');
+        // 最高等级限制为7级
+        return;
+      }
       this.level += 1; // 等级+1
       this.notifyListeners('level', this.level); // 通知等级变化
     }

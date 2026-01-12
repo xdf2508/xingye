@@ -1,123 +1,113 @@
-import { GameObject } from '@eva/eva.js';
-import createImg from './base';
-import { Text } from '@eva/plugin-renderer-text';
-// 修正homeStore路径
+import { DOMManager } from '../domManager';
 import { homeStore } from '../store/homeStore';
 
 export default function createProgress() {
+  const domManager = DOMManager.getInstance();
+  const screen = homeStore.getScreeSize();
+  
   /** ----------------------- 从单例类获取初始数据 ---------------------------- */
   const initialProgressWidth = homeStore.getProgressBarWidth();
   const initialLeftLevel = homeStore.getLeftLevel();
   const initialRightLevel = homeStore.getRightLevel();
   const initialProgressText = homeStore.getProgressText();
 
-  /** -----------------------基础容器创建start---------------------------- */
-  const outter = new GameObject('outter', {
-    position: {
-      x: homeStore.getScreeSize().baseW / 2 - 125,
-      y: 200,
-    },
-    size: {
-      width: 330,
-      height: 25,
-    },
+  /** -----------------------获取已存在的主容器---------------------------- */
+  const mainContainer = domManager.getElement('mainContainer');
+  
+  // 获取进度条元素
+  domManager.createImageElement('progress', './statics/progress.png', {
+    position: { x: screen.baseW / 2 - 125, y: 200 },
+    size: { width: 250, height: 25 }
   });
 
-  const inner = new GameObject('inner', {
+  const innerId = 'progressInnerContainer';
+  domManager.createDivElement(innerId, {
     position: {
-      x: 25,
-      y: 8,
+      x: screen.baseW / 2 - 100, // 25px offset + absolute position
+      y: 208, // 200 + 8
     },
-    size: { width: initialProgressWidth, height: 10 },
+    size: { width: initialProgressWidth, height: 10 }
   });
 
-  createImg('progress', 250, 25, 0, 0, outter);
-  const progressBar = createImg('progressInner', initialProgressWidth, 10, 0, 0, inner);
-  /** -----------------------基础容器创建end---------------------------- */
+  // 获取内部进度条
+  const progressBar = domManager.createImageElement('progressInner', './statics/progress_inner.png', {
+    position: { x: 0, y: 0 },
+    size: { width: initialProgressWidth, height: 10 }
+  });
+  /** -----------------------基础容器获取end---------------------------- */
 
   /** -----------------------进度轴左边等级文案start---------------------------- */
-  const leftLvContainer = new GameObject("text", {
-    position: {
-      x: 8,
-      y: 6,
-    },
-  });
-  const leftLvText = new Text({
-    text: `${initialLeftLevel}级`,
-    style: {
-      fontFamily: "Arial",
-      fontSize: 10,
-      fill: '#fff'
-    }
-  });
-  leftLvContainer.addComponent(leftLvText);
-  outter.addChild(leftLvContainer);
+  const leftLvId = 'leftLevelText';
+  const leftLvElement = domManager.getElement(leftLvId) as HTMLElement;
+  if (leftLvElement) {
+    leftLvElement.textContent = `${initialLeftLevel}级`;
+  }
   /** -----------------------进度轴左边等级文案end---------------------------- */
 
   /** -----------------------内部进度轴中百分比start---------------------------- */
-  const percentLvContainer = new GameObject("text", {
-    position: {
-      x: 160,
-      y: 0,
-    },
-  });
-  const percentLvText = new Text({
-    text: initialProgressText,
-    style: {
-      fontFamily: "Arial",
-      fontSize: 10,
-      fill: '#fff'
-    }
-  });
-  percentLvContainer.addComponent(percentLvText);
-  inner.addChild(percentLvContainer);
+  const percentLvId = 'percentLevelText';
+  const percentLvElement = domManager.getElement(percentLvId) as HTMLElement;
+  if (percentLvElement) {
+    percentLvElement.textContent = initialProgressText;
+  }
   /** -----------------------内部进度轴中百分比end---------------------------- */
 
   /** -----------------------进度轴右侧葫芦start---------------------------- */
-  const huluContainer = new GameObject("text", {
+  const huluContainerId = 'huluContainer';
+  domManager.createDivElement(huluContainerId, {
     position: {
-      x: 205,
-      y: -15,
-    },
-  });
-  createImg('hulu', 30, 40, 0, 0, huluContainer);
-  
-  const levelTextRightContainer = new GameObject("text", {
-    position: {
-      x: 10,
-      y: 18,
-    },
-  });
-  const levelTextRight = new Text({
-    text: `LV${initialRightLevel}`,
-    style: {
-      fontFamily: "Arial",
-      fontSize: 8,
-      fill: '#3c18eeff'
+      x: screen.baseW / 2 + 70, // 205 offset from progress + progress x position
+      y: 185, // 200 - 15
     }
   });
-  levelTextRightContainer.addComponent(levelTextRight);
-  huluContainer.addChild(levelTextRightContainer);
-  inner.addChild(huluContainer);
+
+  domManager.createImageElement('hulu', './statics/hulu.png', {
+    position: { x: 0, y: 0 },
+    size: { width: 30, height: 40 }
+  });
+  
+  const levelTextRightId = 'levelTextRight';
+  const levelTextRightElement = domManager.getElement(levelTextRightId) as HTMLElement;
+  if (levelTextRightElement) {
+    levelTextRightElement.textContent = `Lv${initialRightLevel}`;
+  }
   /** -----------------------进度轴右侧葫芦end---------------------------- */
 
   /** -----------------------监听单例类数据变化，自动更新UI---------------------------- */
   const dataChangeListener = (key: string, value: any) => {
     if (key === 'progress') {
       const newWidth = homeStore.getProgressBarWidth();
-      progressBar.transform.size.width = newWidth;
-      inner.transform.size.width = newWidth;
-      percentLvText.text = homeStore.getProgressText();
+      // 更新进度条宽度
+      if (progressBar instanceof HTMLImageElement) {
+        progressBar.style.width = `${newWidth}px`;
+      }
+      // 更新内部容器宽度
+      const innerContainer = domManager.getElement(innerId);
+      if (innerContainer) {
+        innerContainer.style.width = `${newWidth}px`;
+      }
+      // 更新百分比文本
+      const percentElement = domManager.getElement(percentLvId);
+      if (percentElement) {
+        percentElement.textContent = homeStore.getProgressText();
+      }
     }
     if (key === 'level') {
       const newLeftLevel = homeStore.getLeftLevel();
       const newRightLevel = homeStore.getRightLevel();
-      leftLvText.text = `${newLeftLevel}级`;
-      levelTextRight.text = `Lv${newRightLevel}`;
+      // 更新左侧等级文本
+      const leftLevelElement = domManager.getElement(leftLvId);
+      if (leftLevelElement) {
+        leftLevelElement.textContent = `${newLeftLevel}级`;
+      }
+      // 更新右侧等级文本
+      const rightLevelElement = domManager.getElement(levelTextRightId);
+      if (rightLevelElement) {
+        rightLevelElement.textContent = `Lv${newRightLevel}`;
+      }
     }
   };
   homeStore.onDataChange(dataChangeListener);
 
-  outter.addChild(inner);
-  return outter;
+  return mainContainer;
 }

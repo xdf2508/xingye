@@ -4,43 +4,176 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title></title>
-  <style>
-    * {
-      margin: 0;
-      border: 0;
-      font-size: 36px;
-    }
-
-    .nice {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 36px;
-    }
-
-    input {
-      margin: 0 10px;
-      font-size: 36px;
-      width: 100px;
-      border: 2px solid rgb(58, 58, 58);
-    }
-
-    button {
-      margin: 0 10px;
-      border: 2px solid rgb(58, 58, 58);
-    }
-  </style>
+  <link rel="stylesheet" href="./style.css">
+  <script>
+    // 设置根字体大小以实现rem适配
+    (function() {
+      // 设计稿宽度，用于计算rem基准值
+      const designWidth = 750; // 通常以iPhone 6/7/8的设计稿为准，宽度为750px
+      const maxWidth = 1080; // 限制最大宽度
+      
+      function setRootFontSize() {
+        // 获取当前设备的宽度
+        const deviceWidth = Math.min(document.documentElement.clientWidth || document.body.clientWidth, maxWidth);
+        // 计算根字体大小，以设计稿的1/10为基准，即1rem = 7.5px (当designWidth=750时)
+        const rootFontSize = deviceWidth / 10;
+        // 设置根字体大小
+        document.documentElement.style.fontSize = rootFontSize + 'px';
+      }
+      
+      // 初始化
+      setRootFontSize();
+      
+      // 监听窗口大小变化
+      window.addEventListener('resize', setRootFontSize);
+      window.addEventListener('orientationchange', setRootFontSize);
+    })();
+  </script>
 </head>
 
 <body>
-  <canvas id="canvas" style="
-    display: block;
-    width: auto;
-    height: 100vh;
-    /* aspect-ratio: 750 / 1400; */
-    max-width: 100vw;
-    margin: 0 auto;
-"></canvas>
+  <div id="game-wrapper">
+    <!-- 1. 游戏层 (Eva.js) -->
+    <canvas id="canvas" style="
+      display: block;
+      width: auto;
+      height: 100vh;
+      /* aspect-ratio: 750 / 1400; */
+      max-width: 100vw;
+      margin: 0 auto;
+      cursor: inherit;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    "></canvas>
+
+    <!-- 2. UI 层 (HTML) -->
+    <div id="ui-layer">
+      <!-- 总体容器 -->
+      <div id="mainContainer">
+        <!-- 背景图 -->
+        <img id="bg" src="./statics/bg.png" />
+        
+        <!-- 雨天背景图 -->
+        <img id="rainny" src="./statics/rain_bg.png" />
+        
+        <!-- 红色人偶 -->
+        <img id="redToy" src="./statics/red_toy.png" />
+        
+        <!-- 粉色人偶 -->
+        <img id="pinkToy" src="./statics/pink_toy.png" />
+        
+        <!-- 兴业理财logo -->
+        <img id="logo" src="./statics/logo.png" />
+        
+        <!-- 标题 -->
+        <img id="title" src="./statics/title.png" />
+        
+        <!-- 等级轴 -->
+        <div id="levelContainer">
+          <!-- 等级背景轴 -->
+          <img id="levelBg" src="./statics/level_bg.png" />
+          
+          <!-- 等级图标和透明泡泡 -->
+          <!-- 等级1 -->
+          <img id="levelCircle1" src="./statics/level_circle.png" />
+          <img id="paopao1" src="./statics/paopao.png" />
+          <div id="levelText1" class="level-text">Lv1</div>
+          
+          <!-- 等级2 -->
+          <img id="levelCircle2" src="./statics/level_circle.png" />
+          <img id="paopao2" src="./statics/paopao.png" />
+          <div id="levelText2" class="level-text">Lv2</div>
+          
+          <!-- 等级3 -->
+          <img id="level3" src="./statics/level.png" />
+          <img id="paopao3" src="./statics/paopao.png" />
+          <div id="levelText3" class="level-text">Lv3</div>
+          
+          <!-- 等级4 -->
+          <img id="levelCircle4" src="./statics/level_circle.png" />
+          <img id="paopao4" src="./statics/paopao.png" />
+          <div id="levelText4" class="level-text">Lv4</div>
+          
+          <!-- 等级5 -->
+          <img id="level5" src="./statics/level.png" />
+          <img id="paopao5" src="./statics/paopao.png" />
+          <div id="levelText5" class="level-text">Lv5</div>
+          
+          <!-- 等级6 -->
+          <img id="levelCircle6" src="./statics/level_circle.png" />
+          <img id="paopao6" src="./statics/paopao.png" />
+          <div id="levelText6" class="level-text">Lv6</div>
+          
+          <!-- 等级7 -->
+          <img id="level7" src="./statics/level.png" />
+          <img id="paopao7" src="./statics/paopao.png" />
+          <div id="levelText7" class="level-text">Lv7</div>
+        </div>
+        
+        <!-- 按钮 -->
+        <!-- 攻略 -->
+        <img id="guide" class="btn-common" src="./statics/guide.png" data-interactive="true"/>
+        <!-- 规则 -->
+        <img id="rule" class="btn-common" src="./statics/rule.png" data-interactive="true"/>
+        <!-- 登出 -->
+        <img id="logout" class="btn-common" src="./statics/logout.png" data-interactive="true"/>
+        <!-- 分享 -->
+        <img id="share" class="btn-common" src="./statics/share.png" data-interactive="true"/>
+        <!-- 故事 -->
+        <img id="story" class="btn-common" src="./statics/story.png" data-interactive="true"/>
+        
+        <!-- 我的拼图 -->
+        <img id="jigsawPuzzle" class="btn-common" src="./statics/jigsaw_puzzle.png" data-interactive="true"/>
+        <!-- 成长手册 -->
+        <img id="growthHandbook" class="btn-common" src="./statics/growth_handbook.png" data-interactive="true"/>
+        <!-- 福禄值明细 -->
+        <img id="blessingAndprosperity" class="btn-common" src="./statics/blessing_and_prosperity.png" data-interactive="true"/>
+        <!-- 我的奖品 -->
+        <img id="myPrize" class="btn-common" src="./statics/my_prize.png" data-interactive="true"/>
+        <!-- 做任务 -->
+        <img id="doTask" class="btn-common" src="./statics/do_task.png" data-interactive="true"/>
+        
+        <!-- 进度条 -->
+        <div id="progressOuter">
+          <img id="progress" src="./statics/progress.png" />
+          
+          <!-- 进度条内部容器 -->
+          <div id="progressInnerContainer">
+            <img id="progressInner" src="./statics/progress_inner.png" />
+            
+            <!-- 百分比文本 -->
+            <div id="percentLevelText">0/1000</div>
+            
+            <!-- 葫芦容器 -->
+            <div id="huluContainer">
+              <img id="hulu" src="./statics/hulu.png" />
+              <div id="levelTextRight">Lv1</div>
+            </div>
+          </div>
+          
+          <!-- 左边等级文本 -->
+          <div id="leftLevelText">0级</div>
+        </div>
+        
+        <!-- 浇水按钮 - 这在Eva.js中实现，此处仅作为参考位置 -->
+        <!-- <img id="water" src="./statics/water.png" data-interactive="true"/> -->
+        
+        <!-- 克数 -->
+        <div id="count">
+          <div id="outter">
+            1000克
+          </div>
+        </div>
+        
+        <!-- 树 -->
+        <div id="treeContainer">
+          <img id="tree1" src="./statics/tree1.png" />
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="//cdn.bootcdn.net/ajax/libs/eventemitter3/3.1.2/index.min.js"></script>
   <script src="./main.js"></script>
 </body>

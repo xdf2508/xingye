@@ -1,8 +1,9 @@
-import createImg from './base';
 import { homeStore } from '../store/homeStore';
 import { GameObject, } from '@eva/eva.js';
 import { Render } from '@eva/plugin-renderer-render';
 import { Transition } from '@eva/plugin-transition';
+import { Event } from '@eva/plugin-renderer-event';
+import { Img } from '@eva/plugin-renderer-img';
 export default function water() {
   // 浇灌背景容器
   const bgContainer = new GameObject('waterContainer', {
@@ -12,26 +13,29 @@ export default function water() {
   });
   // 水壶对象
   let waterCan: GameObject;
-  // 浇灌按钮
-  createImg(
-    'water',
-    135, 65,
-    homeStore.getScreeSize().baseW / 2 - 67.5,
-    600,
-    bgContainer,
-    () => {
-      // 调用浇水接口todo...
-      // 发送接口后成功后调用以下动画方法:
-      // 正在浇水提示
-      if (waterCan) {
-        return;
-      }
-      // 增加进度
-      homeStore.addProgress(50);
-      // 水壶动画
-      waterCanAnimation();
+
+  const imgNode = new GameObject(`img-${'water'}-${Date.now()}`, {
+    size: { width: 65, height: 65 }, // 初始尺寸
+    position: { x: homeStore.getScreeSize().baseW / 2 - 67.5, y: 600 },      // 相对父容器的坐标（核心：不再强制全屏）
+    origin: { x: 0, y: 0 },  // 锚点默认左上角，符合常规绘图习惯
+  });
+
+  // 2. 添加图片组件
+  imgNode.addComponent(new Img({ resource: 'water' }));
+  const eventComponent = imgNode.addComponent(new Event());
+  waterCan.addChild(imgNode);
+  eventComponent.on('tap', () => {
+    // 调用浇水接口todo...
+    // 发送接口后成功后调用以下动画方法:
+    // 正在浇水提示
+    if (waterCan) {
+      return;
     }
-  );
+    // 增加进度
+    homeStore.addProgress(50);
+    // 水壶动画
+    waterCanAnimation();
+  }); // 移动端tap/PC端click可按需调整
 
   // 浇水壶动画
   const waterCanAnimation = () => {
@@ -39,15 +43,14 @@ export default function water() {
     let animationCount = 0;
     // 水壶起始位置
     const canStartX = homeStore.getScreeSize().baseW / 2 - 20;
-    // 创建水壶图像
-    waterCan = createImg(
-      'wateringCan',
-      50, 50,
-      canStartX,
-      // 360,
-      250,
-      bgContainer
-    );
+    const imgNode = new GameObject(`img-${'wateringCan'}-${Date.now()}`, {
+      size: { width: 50, height: 50 }, // 初始尺寸
+      position: { x: canStartX, y: 250 },      // 相对父容器的坐标（核心：不再强制全屏）
+      origin: { x: 0, y: 0 },  // 锚点默认左上角，符合常规绘图习惯
+    });
+    // 2. 添加图片组件
+    imgNode.addComponent(new Img({ resource: 'wateringCan' }));
+    
     const render = waterCan.addComponent(
       new Render({
         alpha: 0,
@@ -186,5 +189,7 @@ export default function water() {
       });
     }
   };
+  bgContainer.addChild(imgNode);
+  bgContainer.addChild(waterCan);
   return bgContainer;
 }

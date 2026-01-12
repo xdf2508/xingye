@@ -1,110 +1,150 @@
-import { GameObject } from '@eva/eva.js';
-import createImg from './base';
-import { Text } from '@eva/plugin-renderer-text';
+import { DOMManager } from '../domManager';
 import { homeStore } from '../store/homeStore';
 
 export default function createBackground() {
-  // 1. 创建背景父容器（统一管理两层背景，保留你原有的位置/锚点配置）
-  const bgContainer = new GameObject('bgContainer', {
-    size: { width: homeStore.getScreeSize().baseW, height: homeStore.getScreeSize().baseH }, // 与原背景尺寸一致
-    origin: { x: 0, y: 0 },
+  const domManager = DOMManager.getInstance();
+  const screen = homeStore.getScreeSize();
+  
+  // 获取已存在的主容器
+  const mainContainer = domManager.getElement('mainContainer');
+  
+  // 由于元素已在静态HTML中定义，我们只需获取它们的引用
+  // 背景图
+  domManager.createImageElement('bg', './statics/bg.png', {
     position: { x: 0, y: 0 },
-    anchor: { x: 0, y: 0 },
+    size: { width: screen.baseW, height: screen.baseH }
   });
 
-  // 背景图
-  createImg('bg', homeStore.getScreeSize().baseW, homeStore.getScreeSize().baseH, 0, 0, bgContainer);
-
-  // 阳光背景图
-  // createImg('bgSunny', homeStore.getScreeSize().baseW, homeStore.getScreeSize().baseH, 0, 0, bgContainer);
-
-  // 下雨背景图
-  createImg('rainny', homeStore.getScreeSize().baseW, homeStore.getScreeSize().baseH, 0, 0, bgContainer);
+  // 雨天背景图
+  domManager.createImageElement('rainny', './statics/rain_bg.png', {
+    position: { x: 0, y: 0 },
+    size: { width: screen.baseW, height: screen.baseH }
+  });
 
   // 红色人偶
-  createImg('redToy', 90, 80, homeStore.getScreeSize().baseW / 2 - 80, homeStore.getScreeSize().baseH / 2 + 50, bgContainer);
+  domManager.createImageElement('redToy', './statics/red_toy.png', {
+    position: { x: screen.baseW / 2 - 80, y: screen.baseH / 2 + 50 },
+    size: { width: 90, height: 80 }
+  });
 
   // 粉色人偶
-  createImg('pinkToy', 70, 80, homeStore.getScreeSize().baseW / 2 + 40, homeStore.getScreeSize().baseH / 2 + 70, bgContainer);
+  domManager.createImageElement('pinkToy', './statics/pink_toy.png', {
+    position: { x: screen.baseW / 2 + 40, y: screen.baseH / 2 + 70 },
+    size: { width: 70, height: 80 }
+  });
 
   // 兴业理财logo
-  createImg('logo', 90, 18, 20, 16, bgContainer);
+  domManager.createImageElement('logo', './statics/logo.png', {
+    position: { x: 20, y: 16 },
+    size: { width: 90, height: 18 }
+  });
 
   // 标题
-  createImg('title', 175, 70, homeStore.getScreeSize().baseW / 2 - 87.5, 55, bgContainer);
+  domManager.createImageElement('title', './statics/title.png', {
+    position: { x: screen.baseW / 2 - 87.5, y: 55 },
+    size: { width: 175, height: 70 }
+  });
 
-  /** 等级轴容器 */
-  const levelContainer = new GameObject('levelContainer', {
-    size: { width: 330, height: 15 }, // 与原背景尺寸一致
-    position: { x: homeStore.getScreeSize().baseW / 2 - 165, y: 150 },
+  // 获取等级轴容器
+  domManager.createDivElement('levelContainer', {
+    position: { x: screen.baseW / 2 - 165, y: 150 },
+    size: { width: 330, height: 15 }
   });
 
   // 等级背景轴
-  createImg('levelBg', 330, 8, 0, 0, levelContainer);
+  domManager.createImageElement('levelBg', './statics/level_bg.png', {
+    position: { x: 0, y: 0 },
+    size: { width: 330, height: 8 }
+  });
 
-  // // 等级1
-  createImg('levelCircle', 16, 16, 20, -5, levelContainer);
-  // 等级轴上图标透明泡泡1
-  createImg('paopao', 22, 28, 18, -10, levelContainer);
+  // 等级图标和透明泡泡
+  // 等级1
+  domManager.createImageElement('levelCircle1', './statics/level_circle.png', {
+    position: { x: 20, y: -5 },
+    size: { width: 16, height: 16 }
+  });
+  domManager.createImageElement('paopao1', './statics/paopao.png', {
+    position: { x: 18, y: -10 },
+    size: { width: 22, height: 28 }
+  });
 
   // 等级2
-  createImg('levelCircle', 16, 16, 60, -5, levelContainer);
-  // 等级轴上图标透明泡泡2
-  createImg('paopao', 22, 28, 58, -10, levelContainer);
+  domManager.createImageElement('levelCircle2', './statics/level_circle.png', {
+    position: { x: 60, y: -5 },
+    size: { width: 16, height: 16 }
+  });
+  domManager.createImageElement('paopao2', './statics/paopao.png', {
+    position: { x: 58, y: -10 },
+    size: { width: 22, height: 28 }
+  });
 
   // 等级3
-  createImg('level', 25, 25, 100, -10, levelContainer);
-  // 等级轴上图标透明泡泡3
-  createImg('paopao', 33, 39, 98, -15, levelContainer);
+  domManager.createImageElement('level3', './statics/level.png', {
+    position: { x: 100, y: -10 },
+    size: { width: 25, height: 25 }
+  });
+  domManager.createImageElement('paopao3', './statics/paopao.png', {
+    position: { x: 98, y: -15 },
+    size: { width: 33, height: 39 }
+  });
 
-  // // 等级4
-  createImg('levelCircle', 16, 16, 145, -5, levelContainer);
-  // 等级轴上图标透明泡泡4
-  createImg('paopao', 22, 28, 143, -10, levelContainer);
+  // 等级4
+  domManager.createImageElement('levelCircle4', './statics/level_circle.png', {
+    position: { x: 145, y: -5 },
+    size: { width: 16, height: 16 }
+  });
+  domManager.createImageElement('paopao4', './statics/paopao.png', {
+    position: { x: 143, y: -10 },
+    size: { width: 22, height: 28 }
+  });
 
-  // // 等级5
-  createImg('level', 25, 25, 185, -10, levelContainer);
-  // 等级轴上图标透明泡泡5
-  createImg('paopao', 33, 39, 183, -15, levelContainer);
+  // 等级5
+  domManager.createImageElement('level5', './statics/level.png', {
+    position: { x: 185, y: -10 },
+    size: { width: 25, height: 25 }
+  });
+  domManager.createImageElement('paopao5', './statics/paopao.png', {
+    position: { x: 183, y: -15 },
+    size: { width: 33, height: 39 }
+  });
 
-  // // 等级6
-  createImg('levelCircle', 16, 16, 240, -5, levelContainer);
-  // 等级轴上图标透明泡泡6
-  createImg('paopao', 22, 28, 238, -10, levelContainer);
+  // 等级6
+  domManager.createImageElement('levelCircle6', './statics/level_circle.png', {
+    position: { x: 240, y: -5 },
+    size: { width: 16, height: 16 }
+  });
+  domManager.createImageElement('paopao6', './statics/paopao.png', {
+    position: { x: 238, y: -10 },
+    size: { width: 22, height: 28 }
+  });
 
-  // // 等级7
-  createImg('level', 25, 25, 285, -10, levelContainer);
-  // 等级轴上图标透明泡泡7
-  createImg('paopao', 33, 39, 283, -15, levelContainer);
+  // 等级7
+  domManager.createImageElement('level7', './statics/level.png', {
+    position: { x: 285, y: -10 },
+    size: { width: 25, height: 25 }
+  });
+  domManager.createImageElement('paopao7', './statics/paopao.png', {
+    position: { x: 283, y: -15 },
+    size: { width: 33, height: 39 }
+  });
 
-
-  // 设置等级文案方法
-  const setLvText = (custLevel: number, x: number) => {
-    /** 添加等级文字容器 */
-    const leftLvContainer = new GameObject("levelText", {
-      position: {
-        x: x,
-        y: 23,
-      },
-    });
-    const textObject = new Text({
-      text: `Lv${custLevel}`,
-      style: {
-        fontSize: 13,
-        fill: '#000000'
-      }
-    });
-    leftLvContainer.addComponent(textObject);
-    return leftLvContainer;
+  // 设置等级文案方法（获取文本元素而不是创建新元素）
+  const setLvText = (custLevel: number, x: number, y: number = 23) => {
+    const textId = `levelText${custLevel}`;
+    const textElement = domManager.getElement(textId) as HTMLElement;
+    if (textElement) {
+      textElement.textContent = `Lv${custLevel}`;
+    }
+    return textElement;
   };
-  // 把等级文字添加到等级进度轴容器中
-  levelContainer.addChild(setLvText(1, 20));
-  levelContainer.addChild(setLvText(2, 60));
-  levelContainer.addChild(setLvText(3, 100));
-  levelContainer.addChild(setLvText(4, 145));
-  levelContainer.addChild(setLvText(5, 185));
-  levelContainer.addChild(setLvText(6, 240));
-  levelContainer.addChild(setLvText(7, 285));
-  bgContainer.addChild(levelContainer);
-  return bgContainer; // 返回父容器（包含两层背景）
+  // 获取已存在的等级文字元素
+  setLvText(1, 20);
+  setLvText(2, 60);
+  setLvText(3, 100);
+  setLvText(4, 145);
+  setLvText(5, 185);
+  setLvText(6, 240);
+  setLvText(7, 285);
+  
+  return mainContainer; // 返回主容器元素
 }

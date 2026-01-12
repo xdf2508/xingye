@@ -15,9 +15,16 @@ import createTree from './gameObjects/tree';
 import createWater from './gameObjects/water';
 import createCount from './gameObjects/count';
 import { homeStore } from './store/homeStore';
+import { DOMManager } from './domManager';
+import { PxToRemConverter } from './utils/pxToRemConverter';
 
+// 添加资源
 resource.addResource(resources);
 
+// 创建DOM管理器实例，初始化HTML容器
+const domManager = DOMManager.getInstance();
+
+// 创建Eva.js游戏实例 - 保留动画系统用于复杂动画效果
 const game = new Game({
   systems: [
     new RendererSystem({
@@ -27,23 +34,34 @@ const game = new Game({
       antialias: true,
     }),
     new ImgSystem(),
-    new TransitionSystem(),
-    new SpriteAnimationSystem(),
-    new RenderSystem(),
-    new EventSystem(),
-    new GraphicsSystem(),
-    new TextSystem(),
+    new TransitionSystem(), // 保留过渡动画系统
+    new SpriteAnimationSystem(), // 保留精灵动画系统
+    new RenderSystem(), // 保留渲染系统
+    new EventSystem(), // 保留事件系统
+    new GraphicsSystem(), // 保留图形系统
+    new TextSystem(), // 保留文本系统
   ],
 });
 
-// game.scene.transform.size.width = homeStore.getScreeSize().baseW;
-// game.scene.transform.size.height = homeStore.getScreeSize().baseH;
+// 确保canvas在DOM元素下方，但可以接收事件
+const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
+if (canvas) {
+  canvas.style.zIndex = '1'; // 确保canvas在HTML元素下方
+  canvas.style.position = 'relative';
+  canvas.style.pointerEvents = 'auto'; // 确保canvas接收鼠标事件
+}
 
-game.scene.addChild(createBackground());
-game.scene.addChild(createProgress());
-game.scene.addChild(createBtns());
-game.scene.addChild(createWater());
-game.scene.addChild(createCount());
-game.scene.addChild(createTree());
+// 添加游戏对象到场景中（主要用于处理动画和事件，而不是渲染DOM元素）
+// 保留Eva.js场景用于复杂动画效果，而将普通的UI元素使用HTML DOM呈现
+// createBackground();
+// createProgress();
+// createBtns();
+createWater();
+// createCount();
+// createTree();
 
+// 初始化px转rem转换器，实现移动端适配
+PxToRemConverter.getInstance();
+
+// 将游戏实例暴露到全局，以便调试
 window.game = game;

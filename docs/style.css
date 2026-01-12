@@ -1,0 +1,460 @@
+/* 
+ * 兴业银行互动游戏项目 - 样式定义
+ * 
+ * 本样式表定义了所有静态元素的布局和样式
+ * 所有元素基于750px宽度设计稿进行定位
+ */
+
+/* 游戏包装器 - 实现三明治架构 */
+#game-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 主容器 - 所有元素的根容器 */
+#mainContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+/* UI层 - 覆盖在Canvas上的HTML UI元素 */
+#ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 背景相关元素 */
+#bg, #rainny {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* 人物角色元素 */
+#redToy {
+  position: absolute;
+  width: 90px;
+  height: 80px;
+  left: 295px;  /* 基于750px设计稿的定位 */
+  top: 705px;
+}
+
+#pinkToy {
+  position: absolute;
+  width: 70px;
+  height: 80px;
+  left: 385px;  /* 基于750px设计稿的定位 */
+  top: 725px;
+}
+
+/* Logo和标题元素 */
+#logo {
+  position: absolute;
+  width: 90px;
+  height: 18px;
+  left: 20px;
+  top: 16px;
+}
+
+#title {
+  position: absolute;
+  width: 175px;
+  height: 70px;
+  left: 287.5px;  /* (750-175)/2 = 287.5 */
+  top: 55px;
+}
+
+/* 等级轴相关容器和元素 */
+#levelContainer {
+  position: absolute;
+  width: 330px;
+  height: 15px;
+  left: 210px;    /* (750-330)/2 = 210 */
+  top: 150px;
+}
+
+#levelBg {
+  position: absolute;
+  width: 330px;
+  height: 8px;
+  left: 0;
+  top: 0;
+}
+
+/* 等级图标通用样式 */
+.level-icon {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.level-special {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+}
+
+/* 等级轴上的泡泡样式 */
+.level-bubble {
+  position: absolute;
+  width: 22px;
+  height: 28px;
+}
+
+.level-bubble-large {
+  position: absolute;
+  width: 33px;
+  height: 39px;
+}
+
+/* 各级图标位置 */
+#levelCircle1, #levelCircle4 {
+  left: 20px;
+  top: -5px;
+}
+
+#levelCircle2, #levelCircle6 {
+  left: 60px;
+  top: -5px;
+}
+
+#level3 {
+  left: 100px;
+  top: -10px;
+}
+
+#levelCircle4 {
+  left: 145px;
+  top: -5px;
+}
+
+#level5 {
+  left: 185px;
+  top: -10px;
+}
+
+#levelCircle6 {
+  left: 240px;
+  top: -5px;
+}
+
+#level7 {
+  left: 285px;
+  top: -10px;
+}
+
+/* 各级泡泡位置 */
+#paopao1, #paopao4 {
+  left: 18px;
+  top: -10px;
+}
+
+#paopao2, #paopao6 {
+  left: 58px;
+  top: -10px;
+}
+
+#paopao3 {
+  left: 98px;
+  top: -15px;
+}
+
+#paopao5 {
+  left: 183px;
+  top: -15px;
+}
+
+#paopao7 {
+  left: 283px;
+  top: -15px;
+}
+
+/* 等级文字样式 */
+.level-text {
+  position: absolute;
+  font-size: 13px;
+  color: #000000;
+  font-weight: bold;
+  user-select: none;
+  left: 20px;
+  top: 23px;
+}
+
+/* 各级文字位置 */
+#levelText1 {
+  left: 20px;
+  top: 23px;
+}
+
+#levelText2 {
+  left: 60px;
+  top: 23px;
+}
+
+#levelText3 {
+  left: 100px;
+  top: 23px;
+}
+
+#levelText4 {
+  left: 145px;
+  top: 23px;
+}
+
+#levelText5 {
+  left: 185px;
+  top: 23px;
+}
+
+#levelText6 {
+  left: 240px;
+  top: 23px;
+}
+
+#levelText7 {
+  left: 285px;
+  top: 23px;
+}
+
+/* 按钮通用样式 - 所有按钮的基础样式 */
+.btn-common {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* 各按钮具体位置 */
+#guide {
+  width: 60px;
+  height: 32px;
+  left: 0;
+  top: 60px;
+}
+
+#rule {
+  width: 60px;
+  height: 32px;
+  left: 0;
+  top: 100px;
+}
+
+#logout {
+  width: 60px;
+  height: 32px;
+  left: 690px;   /* 750-60 = 690 */
+  top: 30px;
+}
+
+#share {
+  width: 60px;
+  height: 32px;
+  left: 690px;   /* 750-60 = 690 */
+  top: 70px;
+}
+
+#story {
+  width: 60px;
+  height: 32px;
+  left: 690px;   /* 750-60 = 690 */
+  top: 110px;
+}
+
+#jigsawPuzzle {
+  width: 80px;
+  height: 80px;
+  left: 15px;
+  top: 250px;
+}
+
+#growthHandbook {
+  width: 80px;
+  height: 80px;
+  left: 15px;
+  top: 360px;
+}
+
+#blessingAndprosperity {
+  width: 90px;
+  height: 70px;
+  left: 15px;
+  top: 470px;
+}
+
+#myPrize {
+  width: 80px;
+  height: 80px;
+  left: 15px;
+  top: 580px;
+}
+
+#doTask {
+  width: 80px;
+  height: 80px;
+  left: 660px;   /* 750-90 = 660 (考虑了按钮宽度) */
+  top: 580px;
+}
+
+/* 进度条相关元素 */
+#progressOuter {
+  position: absolute;
+  width: 330px;
+  height: 25px;
+  left: 210px;    /* (750-330)/2 = 210 */
+  top: 200px;
+  overflow: hidden;
+}
+
+#progress {
+  position: absolute;
+  width: 250px;
+  height: 25px;
+  left: 0;
+  top: 0;
+}
+
+#progressInnerContainer {
+  position: absolute;
+  width: 0;
+  height: 10px;
+  left: 25px;     /* 进度条左侧偏移 */
+  top: 8px;       /* 垂直居中 */
+  overflow: hidden;
+}
+
+#progressInner {
+  position: absolute;
+  width: 0;
+  height: 10px;
+  left: 0;
+  top: 0;
+}
+
+/* 进度相关文本 */
+#leftLevelText {
+  position: absolute;
+  font-size: 10px;
+  color: #fff;
+  font-weight: bold;
+  user-select: none;
+  left: 8px;
+  top: 6px;
+}
+
+#percentLevelText {
+  position: absolute;
+  font-size: 10px;
+  color: #fff;
+  font-weight: bold;
+  user-select: none;
+  left: 160px;
+  top: 0;
+}
+
+#huluContainer {
+  position: absolute;
+  width: 30px;
+  height: 40px;
+  left: 205px;
+  top: -15px;
+}
+
+#hulu {
+  position: absolute;
+  width: 30px;
+  height: 40px;
+  left: 0;
+  top: 0;
+}
+
+#levelTextRight {
+  position: absolute;
+  font-size: 8px;
+  color: #3c18eeff;
+  font-weight: bold;
+  user-select: none;
+  left: 10px;
+  top: 18px;
+}
+
+/* 浇水按钮 */
+#water {
+  position: absolute;
+  width: 135px;
+  height: 65px;
+  left: 50%;
+  top: 600px;
+  transform: translateX(-50%);
+}
+
+/* 克数计数器 */
+#count {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: 517.5px;  /* 基于750px设计稿的定位 */
+  top: 600px;
+}
+
+/* 克数圆形背景 */
+#outter {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: 0;
+  top: 0;
+  border-radius: 20px;
+  background-color: #de3249;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: thin;
+  color: #ffffff;
+}
+
+/* 树容器 */
+#treeContainer {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  left: 385px;    /* 基于750px设计稿的定位 */
+  top: 550px;
+  overflow: hidden;
+}
+
+/* 树元素 */
+#tree1 {
+  position: absolute;
+  width: 115px;
+  height: 120px;
+  left: 10px;
+  top: 0;
+}
+
+/* 通用样式 */
+.absolute-positioned {
+  position: absolute;
+}
+
+/* 动画相关的样式 - 支持Eva.js动画功能 */
+.watering-can {
+  transition: opacity 2.5s ease-in-out, transform 2s ease-out;
+}
+
+.bubble-animation {
+  transition: opacity 1500ms ease-out, transform 1500ms ease-out;
+}

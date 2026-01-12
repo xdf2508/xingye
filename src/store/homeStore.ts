@@ -1,4 +1,3 @@
-// src/store/HomeStore.ts
 type Listener = (key: string, value: any) => void;
 
 class HomeStore {
@@ -9,12 +8,14 @@ class HomeStore {
   private maxLevel = 8; // 最高等级
   private progressBarWidthMax = 210; // 进度轴最大像素宽度
   private level = 1;              // 右边等级（LVx），左边等级 = level - 1
+  private baseW: number = window.innerWidth; // 默认屏宽
+  private baseH: number = window.innerHeight; // 默认屏高
 
   // 数据监听回调列表
   private listeners: Listener[] = [];
 
   // 私有构造函数，确保全局唯一实例
-  private constructor() {}
+  private constructor() { }
 
   // 获取单例实例
   public static getInstance(): HomeStore {
@@ -25,6 +26,11 @@ class HomeStore {
   }
 
   // ---------- 读取数据的方法 ----------
+  // 获取屏幕尺寸
+  public getScreeSize(): { baseW: number, baseH: number } {
+    return { baseW: this.baseW, baseH: this.baseH };
+  }
+
   // 获取当前进度数值（0-1000）
   public getProgressValue(): number {
     return this.progressValue;

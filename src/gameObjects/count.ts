@@ -1,30 +1,39 @@
+import { homeStore } from '../store/homeStore';
 import { GameObject } from '@eva/eva.js';
+import { Graphics } from '@eva/plugin-renderer-graphics';
 import { Text } from '@eva/plugin-renderer-text';
 
 export default function createCount() {
   // 当前克数
-  let currentCount: number = 0;
+  let currentCount: number = 1000;
   // 请求接口获取剩余克数
-  // 设置圆圈容器
-  const circleBg = new GameObject('circle', {
-    position: {
-      x: 200,
-      y: 500,
-    },
-    size: {
-      width: 300,
-      height: 24,
-    },
-  });
   // 创建克数文案
   let currentCountObject = new GameObject('count', {
     position: {
-      x: window.innerWidth / 2 + 67.5,
+      x: homeStore.getScreeSize().baseW / 2 + 67.5,
       y: 600
     },
   });
+  // 设置圆圈容器
+  const outter = new GameObject('outter', {
+    position: {
+      x: 0,
+      y: 0,
+    },
+    size: {
+      width: 30,
+      height: 30,
+    },
+  });
+
+  const outterGraphics = outter.addComponent(new Graphics());
+  outterGraphics.graphics.beginFill(0xde3249, 1);
+  outterGraphics.graphics.drawRoundedRect(0, 0, 30, 30, 20);
+  outterGraphics.graphics.endFill();
+
+  outter.addComponent(outterGraphics);
   // 将剩余克数添加到剩余克数容器中
-  currentCountObject.addComponent(new Text({
+  outter.addComponent(new Text({
     text: `${currentCount}克`,
     style: {
       // 字体设置：使用黑体以确保中文“克”字清晰
@@ -39,6 +48,7 @@ export default function createCount() {
       fill: "#ffffff",
     }
   }));
+
 
   // 监听等级变化，切换树的生长状态
   // const onLevelChange = (key: string, value: number) => {
@@ -55,6 +65,6 @@ export default function createCount() {
   //   }
   // };
   // homeStore.onDataChange(onLevelChange);
-
+  currentCountObject.addChild(outter);
   return currentCountObject;
 }

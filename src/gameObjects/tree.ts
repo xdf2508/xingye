@@ -7,7 +7,7 @@ import { Transition } from '@eva/plugin-transition';
 export default function createTree() {
   // 树的容器（锚点设为底部中心，方便定位）
   const treeContainer = new GameObject('treeContainer', {
-    position: { x: window.innerWidth / 2 + 35, y: 550 }, // 树的位置（对应截图中树苗位置）
+    position: { x: homeStore.getScreeSize().baseW / 2 + 35, y: 550 }, // 树的位置（对应截图中树苗位置）
     origin: { x: 0.5, y: 1 }, // 锚点：底部中心
     size: { width: 120, height: 120 } // 树的容器尺寸
   });

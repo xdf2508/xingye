@@ -10,18 +10,21 @@
       border: 0;
       font-size: 36px;
     }
+
     .nice {
       display: flex;
-      justify-content:center;
+      justify-content: center;
       align-items: center;
       font-size: 36px;
     }
+
     input {
       margin: 0 10px;
       font-size: 36px;
       width: 100px;
       border: 2px solid rgb(58, 58, 58);
     }
+
     button {
       margin: 0 10px;
       border: 2px solid rgb(58, 58, 58);
@@ -30,13 +33,14 @@
 </head>
 
 <body>
-  <canvas id="canvas" style="width: 100vw;
-    height: 100vh; /* 100vh - 顶部40 - 底部20 */
-    top: 0;
-    position: absolute; /* 定位到指定位置 */
+  <canvas id="canvas" style="
     display: block;
-    margin: 0;
-    padding: 0;"></canvas>
+    width: auto;
+    height: 100vh;
+    /* aspect-ratio: 750 / 1400; */
+    max-width: 100vw;
+    margin: 0 auto;
+"></canvas>
   <script src="//cdn.bootcdn.net/ajax/libs/eventemitter3/3.1.2/index.min.js"></script>
   <script src="./main.js"></script>
 </body>

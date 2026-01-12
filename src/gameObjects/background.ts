@@ -1,44 +1,42 @@
 import { GameObject } from '@eva/eva.js';
 import createImg from './base';
 import { Text } from '@eva/plugin-renderer-text';
+import { homeStore } from '../store/homeStore';
 
 export default function createBackground() {
   // 1. 创建背景父容器（统一管理两层背景，保留你原有的位置/锚点配置）
   const bgContainer = new GameObject('bgContainer', {
-    size: { width: window.innerWidth, height: window.innerHeight }, // 与原背景尺寸一致
+    size: { width: homeStore.getScreeSize().baseW, height: homeStore.getScreeSize().baseH }, // 与原背景尺寸一致
     origin: { x: 0, y: 0 },
     position: { x: 0, y: 0 },
     anchor: { x: 0, y: 0 },
   });
 
   // 背景图
-  createImg('bg', window.innerWidth, window.innerHeight, 0, 0, bgContainer);
+  createImg('bg', homeStore.getScreeSize().baseW, homeStore.getScreeSize().baseH, 0, 0, bgContainer);
 
   // 阳光背景图
-  // createImg('bgSunny', window.innerWidth, window.innerHeight, 0, 0, bgContainer);
+  // createImg('bgSunny', homeStore.getScreeSize().baseW, homeStore.getScreeSize().baseH, 0, 0, bgContainer);
 
   // 下雨背景图
-  createImg('rainny', window.innerWidth, window.innerHeight, 0, 0, bgContainer);
+  createImg('rainny', homeStore.getScreeSize().baseW, homeStore.getScreeSize().baseH, 0, 0, bgContainer);
 
   // 红色人偶
-  createImg('redToy', 90, 80, window.innerWidth / 2 - 80, window.innerHeight / 2 + 50, bgContainer);
+  createImg('redToy', 90, 80, homeStore.getScreeSize().baseW / 2 - 80, homeStore.getScreeSize().baseH / 2 + 50, bgContainer);
 
   // 粉色人偶
-  createImg('pinkToy', 70, 80, window.innerWidth / 2 + 40, window.innerHeight / 2 + 70, bgContainer);
-
-  // 粉色人偶
-  createImg('pinkToy', 70, 80, window.innerWidth / 2 + 40, window.innerHeight / 2 + 70, bgContainer);
+  createImg('pinkToy', 70, 80, homeStore.getScreeSize().baseW / 2 + 40, homeStore.getScreeSize().baseH / 2 + 70, bgContainer);
 
   // 兴业理财logo
   createImg('logo', 90, 18, 20, 16, bgContainer);
 
   // 标题
-  createImg('title', 175, 70, window.innerWidth / 2 - 87.5, 55, bgContainer);
+  createImg('title', 175, 70, homeStore.getScreeSize().baseW / 2 - 87.5, 55, bgContainer);
 
   /** 等级轴容器 */
   const levelContainer = new GameObject('levelContainer', {
     size: { width: 330, height: 15 }, // 与原背景尺寸一致
-    position: { x: window.innerWidth / 2 - 165, y: 150 },
+    position: { x: homeStore.getScreeSize().baseW / 2 - 165, y: 150 },
   });
 
   // 等级背景轴

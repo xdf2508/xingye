@@ -14,7 +14,7 @@ export default function createProgress() {
   /** -----------------------基础容器创建start---------------------------- */
   const outter = new GameObject('outter', {
     position: {
-      x: window.innerWidth / 2 - 125,
+      x: homeStore.getScreeSize().baseW / 2 - 125,
       y: 200,
     },
     size: {

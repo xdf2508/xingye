@@ -6,7 +6,7 @@ import { Transition } from '@eva/plugin-transition';
 export default function water() {
   // 浇灌背景容器
   const bgContainer = new GameObject('waterContainer', {
-    size: { width: window.innerWidth, height: window.innerHeight },
+    size: { width: homeStore.getScreeSize().baseW, height: homeStore.getScreeSize().baseH },
     origin: { x: 0, y: 0 },
     position: { x: 0, y: 0 },
   });
@@ -16,7 +16,7 @@ export default function water() {
   createImg(
     'water',
     135, 65,
-    window.innerWidth / 2 - 67.5,
+    homeStore.getScreeSize().baseW / 2 - 67.5,
     600,
     bgContainer,
     () => {
@@ -27,7 +27,7 @@ export default function water() {
         return;
       }
       // 增加进度
-      homeStore.addProgress(250);
+      homeStore.addProgress(50);
       // 水壶动画
       waterCanAnimation();
     }
@@ -38,7 +38,7 @@ export default function water() {
     // 动画计数器
     let animationCount = 0;
     // 水壶起始位置
-    const canStartX = window.innerWidth / 2 - 20;
+    const canStartX = homeStore.getScreeSize().baseW / 2 - 20;
     // 创建水壶图像
     waterCan = createImg(
       'wateringCan',
@@ -133,8 +133,8 @@ export default function water() {
     const starCount = Math.floor(Math.random() * 3) + 1;
     // 草地位置
     const grassArea = {
-      xStart: window.innerWidth / 2 - 50,
-      xEnd: window.innerWidth / 2 + 50,
+      xStart: homeStore.getScreeSize().baseW / 2 - 50,
+      xEnd: homeStore.getScreeSize().baseW / 2 + 50,
       y: 500
     };
     // 循环设置泡泡初始位置和冒泡动画

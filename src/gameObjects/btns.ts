@@ -1,9 +1,10 @@
 import { GameObject } from '@eva/eva.js';
 import createImg from './base';
+import { homeStore } from '../store/homeStore';
 
 export default function createBtns() {
   const bgContainer = new GameObject('xxx', {
-    size: { width: window.innerWidth, height: window.innerHeight }, // 与原背景尺寸一致
+    size: { width: homeStore.getScreeSize().baseW, height: homeStore.getScreeSize().baseH }, // 与原背景尺寸一致
     origin: { x: 0, y: 0 },
     position: { x: 0, y: 0 },
   });
@@ -16,15 +17,15 @@ export default function createBtns() {
     alert('规则')
   });
   // 
-  createImg('logout', 60, 32, window.innerWidth - 60, 30, bgContainer, () => {
+  createImg('logout', 60, 32, homeStore.getScreeSize().baseW - 60, 30, bgContainer, () => {
     alert('登出')
   });
   // 
-  createImg('share', 60, 32, window.innerWidth - 60, 70, bgContainer, () => {
+  createImg('share', 60, 32, homeStore.getScreeSize().baseW - 60, 70, bgContainer, () => {
     alert('分享')
   });
   // 
-  createImg('story', 60, 32, window.innerWidth - 60, 110, bgContainer, () => {
+  createImg('story', 60, 32, homeStore.getScreeSize().baseW - 60, 110, bgContainer, () => {
     alert('故事')
   });
   // 我的拼图
@@ -44,7 +45,7 @@ export default function createBtns() {
     alert('我的奖品')
   });
   // 做任务
-  createImg('doTask', 80, 80, window.innerWidth - 90, 580, bgContainer, () => {
+  createImg('doTask', 80, 80, homeStore.getScreeSize().baseW - 90, 580, bgContainer, () => {
     alert('做任务')
   });
   return bgContainer;

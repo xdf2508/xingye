@@ -15,6 +15,8 @@ import createTree from './gameObjects/tree';
 import createWater from './gameObjects/water';
 import createCount from './gameObjects/count';
 import { homeStore } from './store/homeStore';
+import { MaskSystem } from '@eva/plugin-renderer-mask';
+import Toast from './utils/toast';
 
 resource.addResource(resources);
 
@@ -33,6 +35,7 @@ const game = new Game({
     new EventSystem(),
     new GraphicsSystem(),
     new TextSystem(),
+    new MaskSystem()
   ],
 });
 
@@ -45,5 +48,5 @@ game.scene.addChild(createBtns());
 game.scene.addChild(createWater());
 game.scene.addChild(createCount());
 game.scene.addChild(createTree());
-
+Toast.init(game);
 window.game = game;

@@ -5,50 +5,63 @@ import { Text } from '@eva/plugin-renderer-text';
 
 export default function createCount() {
   // 当前克数
-  let currentCount: number = 1000;
+  let currentCount: number = 0;
   // 请求接口获取剩余克数
-  // 创建克数文案
-  let currentCountObject = new GameObject('count', {
-    position: {
-      x: homeStore.getScreeSize().baseW / 2 + 67.5,
-      y: 600
-    },
-  });
+  currentCount = 0;
+  // 将剩余克数数据设置到服务中
+  homeStore.setWaterRemainSize(currentCount);
   // 设置圆圈容器
   const outter = new GameObject('outter', {
     position: {
-      x: 0,
-      y: 0,
+      x: homeStore.getScreeSize().baseW / 2 + 45,
+      y: 605,
     },
     size: {
-      width: 30,
-      height: 30,
+      width: 20,
+      height: 20,
     },
   });
 
   const outterGraphics = outter.addComponent(new Graphics());
   outterGraphics.graphics.beginFill(0xde3249, 1);
-  outterGraphics.graphics.drawRoundedRect(0, 0, 30, 30, 20);
+  outterGraphics.graphics.drawRoundedRect(0, 0, 20, 20, 10);
   outterGraphics.graphics.endFill();
-
-  outter.addComponent(outterGraphics);
+  const text = new GameObject("text", {
+    position: {
+      x: 0,
+      y: 0
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5
+    },
+    anchor: {
+      x: 0.5,
+      y: 0.5
+    }
+  });
   // 将剩余克数添加到剩余克数容器中
-  outter.addComponent(new Text({
+  let newCount = new Text({
     text: `${currentCount}克`,
     style: {
-      // 字体设置：使用黑体以确保中文“克”字清晰
-      fontFamily: "Arial, 'Microsoft YaHei', sans-serif",
-      // 大小：根据圆圈大小适当调整，建议 20-24 左右
-      fontSize: 16,
-      // 样式：去掉 italic，改为正常
-      fontStyle: "normal",
-      // 粗细：图中文字较粗
-      fontWeight: "thin",
-      // 颜色：纯白
-      fill: "#ffffff",
+      fill: '#ffffff', // gradient
+      wordWrap: true,
+      breakWords: true,
+      wordWrapWidth: 35,
+      fontSize: 12,
+      align: 'center'
     }
-  }));
+  });
 
+  // 动态数字处理
+  const dataChangeListener = (key: string, value: any) => {
+    if (key === 'count') {
+      console.log('触发');
+      newCount.text = value + `克`;
+    }
+  };
+  homeStore.onDataChange(dataChangeListener);
+  text.addComponent(newCount);
 
   // 监听等级变化，切换树的生长状态
   // const onLevelChange = (key: string, value: number) => {
@@ -65,6 +78,6 @@ export default function createCount() {
   //   }
   // };
   // homeStore.onDataChange(onLevelChange);
-  currentCountObject.addChild(outter);
-  return currentCountObject;
+  outter.addChild(text);
+  return outter;
 }

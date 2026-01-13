@@ -10,6 +10,9 @@ class HomeStore {
   private level = 1;              // 右边等级（LVx），左边等级 = level - 1
   private baseW: number = window.innerWidth; // 默认屏宽
   private baseH: number = window.innerHeight; // 默认屏高
+  private waterSize: number = 50; // 每次浇水用量
+  private waterRemainingSize: number = 0; // 剩余水量
+  private waterStatus: boolean = false; // 是否允许浇灌 true-允许 false-不允许
 
   // 数据监听回调列表
   private listeners: Listener[] = [];
@@ -56,6 +59,21 @@ class HomeStore {
     return `${this.progressValue}/${this.progressMaxValue}`;
   }
 
+  // 获取每次浇水使用水量
+  public getWaterSize() {
+    return this.waterSize;
+  }
+
+  // 获取当前剩余水量
+  public getRemainingWaterSize() {
+    return this.waterRemainingSize;
+  }
+
+  // 获取是否允许浇灌
+  public getWaterStatus() {
+    return this.waterStatus;
+  }
+
   // ---------- 修改数据的方法 ----------
   // 增加进度（点击浇灌调用）
   public addProgress(step: number): void {
@@ -77,6 +95,41 @@ class HomeStore {
 
     this.progressValue = newProgress;
     this.notifyListeners('progress', this.progressValue); // 通知进度变化
+  }
+
+  // 设置剩余水量
+  public setWaterRemainSize(count: number) {
+    this.waterRemainingSize = count;
+    // 设置是否允许再次浇灌
+    this.setWaterStatus();
+  }
+
+  public setWaterStatus() {
+    this.waterStatus = this.waterRemainingSize >= this.waterSize;
+    return this.waterStatus;
+  }
+
+  // 更新剩余水量动画
+  public waterAnimation() {
+    // 如果剩余水量少于50，则直接阻断
+    if (this.waterRemainingSize < 50) {
+      return;
+    }
+    // 从当前剩余水量开始减少，每次减少1，直到减少到为0
+    // 1. 定义一个 sleep 函数
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    const runTask = async () => {
+      for (let i = this.waterRemainingSize; i >= 0; i--) {
+        // console.log(`执行第 ${i} 次`);
+        this.waterRemainingSize = i;
+        this.setWaterRemainSize(this.waterRemainingSize);
+        this.notifyListeners('count', this.waterRemainingSize); // 通知剩余克数变化
+        // 2. 在循环中等待
+        await sleep(1);
+      }
+      // console.log("全部执行完毕");
+    }
+    runTask();
   }
 
   // ---------- 监听相关方法 ----------

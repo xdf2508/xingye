@@ -3,6 +3,7 @@ import { homeStore } from '../store/homeStore';
 import { GameObject, } from '@eva/eva.js';
 import { Render } from '@eva/plugin-renderer-render';
 import { Transition } from '@eva/plugin-transition';
+import Toast from '../utils/toast';
 export default function water() {
   // 浇灌背景容器
   const bgContainer = new GameObject('waterContainer', {
@@ -26,8 +27,13 @@ export default function water() {
       if (waterCan) {
         return;
       }
+      // 如果剩余克数不满每次浇灌需要基数，则toast提示并阻断浇灌动画
+      if (!homeStore.getWaterStatus()) {
+        Toast.show('目前福禄值不足，快去完成获取任务吧！');
+        return;
+      }
       // 增加进度
-      homeStore.addProgress(50);
+      homeStore.addProgress(homeStore.getWaterSize());
       // 水壶动画
       waterCanAnimation();
     }
@@ -183,6 +189,8 @@ export default function water() {
       // 销毁泡泡
       bubbleTrans.on('finish', () => {
         bubble.destroy();
+        // 开始扣除剩余克数动画
+        homeStore.waterAnimation();
       });
     }
   };

@@ -32,6 +32,7 @@
     "@eva/plugin-renderer-event": "^1.1.5",
     "@eva/plugin-renderer-graphics": "^1.1.5",
     "@eva/plugin-renderer-img": "^1.1.5",
+    "@eva/plugin-renderer-mask": "^1.2.8",
     "@eva/plugin-renderer-render": "^1.2.8",
     "@eva/plugin-renderer-sprite-animation": "^1.1.5",
     "@eva/plugin-renderer-text": "^1.2.8",

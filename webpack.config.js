@@ -76,7 +76,7 @@ module.exports = {
   },
 
   devServer: {
-    port: 9000,
+    port: 9001,
     compress: true,
     contentBase: path.join(__dirname, 'docs'),
     allowedHosts: [''],

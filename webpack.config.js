@@ -76,6 +76,8 @@ module.exports = {
   },
 
   devServer: {
+     // 方式1：禁用主机检查（开发环境临时用）
+    disableHostCheck: true,
     port: 9001,
     compress: true,
     contentBase: path.join(__dirname, 'docs'),

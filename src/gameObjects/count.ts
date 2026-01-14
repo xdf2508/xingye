@@ -7,7 +7,7 @@ export default function createCount() {
   // 当前克数
   let currentCount: number = 0;
   // 请求接口获取剩余克数
-  currentCount = 50;
+  currentCount = 10000;
   // 将剩余克数数据设置到服务中
   homeStore.setWaterRemainSize(currentCount);
   // 设置圆圈容器
@@ -56,7 +56,6 @@ export default function createCount() {
   // 动态数字处理
   const dataChangeListener = (key: string, value: any) => {
     if (key === 'count') {
-      console.log('触发');
       newCount.text = value + `克`;
     }
   };

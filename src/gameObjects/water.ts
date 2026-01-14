@@ -15,7 +15,7 @@ export default function water() {
   let waterCan: GameObject;
   // 浇灌按钮
   createImg(
-    'water',
+    'waterBtn',
     135, 65,
     homeStore.getScreeSize().baseW / 2 - 67.5,
     600,
@@ -28,12 +28,19 @@ export default function water() {
         return;
       }
       // 如果剩余克数不满每次浇灌需要基数，则toast提示并阻断浇灌动画
-      if (!homeStore.getWaterStatus()) {
+      if (homeStore.getWaterStatus() === 'NO_WATER') {
         Toast.show('目前福禄值不足，快去完成获取任务吧！');
         return;
       }
+      // 检查是否已达到最高等级
+      if (homeStore.getWaterStatus() === 'LEVEL_MAX') {
+        Toast.show('恭喜您！葫芦树已成熟~');
+        return;
+      }
+      console.log('状态:', homeStore.getWaterStatus());
       // 增加进度
-      homeStore.addProgress(homeStore.getWaterSize());
+      // homeStore.addProgress(homeStore.getWaterSize());
+      homeStore.addProgress();
       // 水壶动画
       waterCanAnimation();
     }
@@ -135,6 +142,8 @@ export default function water() {
 
   // 冒泡动画
   const bubbleAnimation = () => {
+    // 动画计数器
+    let animationCount = 0;
     // 泡泡个数 随机1-3个
     const starCount = Math.floor(Math.random() * 3) + 1;
     // 草地位置
@@ -189,8 +198,13 @@ export default function water() {
       // 销毁泡泡
       bubbleTrans.on('finish', () => {
         bubble.destroy();
-        // 开始扣除剩余克数动画
-        homeStore.waterAnimation();
+        animationCount++;
+        // 所有泡泡动画都执行完毕后执行以下
+        // if (animationCount >= starCount) {
+        //   // 开始扣除剩余克数动画
+        //   homeStore.waterAnimation();
+        // }
+
       });
     }
   };

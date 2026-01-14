@@ -398,14 +398,14 @@ export default [
     },
     preload: true,
   },
-  // 浇灌
+  // 浇灌按钮
   {
-    name: 'water',
+    name: 'waterBtn',
     type: RESOURCE_TYPE.IMAGE,
     src: {
       image: {
         type: 'png',
-        url: './statics/water.png',
+        url: './statics/water_btn.png',
       },
     },
     preload: true,

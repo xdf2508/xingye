@@ -99,7 +99,6 @@ export default function createTree() {
       currentTree.destroy();
       // 创建对应等级的新树图片
       const level = getTreeResource(homeStore.getLeftLevel());
-      console.log('受到', level);
       const { w, h, x, y } = getTreeSize(level);
       // 先展示发光树干图，渐隐后显示对应树干图
       const currenTreeTem = createImg(
